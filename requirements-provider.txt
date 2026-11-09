@@ -1,0 +1,5 @@
+# 按实际使用的模型供应商选择安装，不需要全部安装。
+langchain-openai>=1.1,<2
+# langchain-deepseek>=1.0,<2
+# langchain-ollama>=1.0,<2
+# langchain-openrouter>=0.1,<1
