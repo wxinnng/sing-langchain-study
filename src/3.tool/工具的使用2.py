@@ -15,6 +15,8 @@ def get_user_question_count(runtime: ToolRuntime) -> str:
     # 从State中获取所有的对话消息
     all_messages = runtime.state['messages']
 
+    username = runtime.state['username'] # wangxing
+
     # 统计用户发送的信息的数量
     user_message_count = len(
         [msg for msg in all_messages if isinstance(msg , HumanMessage)]
@@ -37,6 +39,8 @@ def test_get_user_question_count():
         system_prompt="你是一个智能客服助手，回答用户的提问和帮助用户解决问题",
     )
 
+    # 在这个对象里面设置的属性，都可以在Toolruntime.state里拿到
+
     response = agent.invoke({
         'messages' : [
             HumanMessage("我想买iPhone 16"),
@@ -44,7 +48,8 @@ def test_get_user_question_count():
             HumanMessage("现在有货吗？"),
             AIMessage("库存充足，需要我帮你下单吗？"),
             HumanMessage("我问了多少个问题了？"), 
-        ]
+        ],
+        'username':'wangxing'
     })
 
     print(response['messages'][-1].content)

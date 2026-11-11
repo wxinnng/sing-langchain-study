@@ -17,6 +17,7 @@ class UserContext:
 def get_user_city(runtime: ToolRuntime[UserContext]) -> str :
     """获取用户当前所在的城市"""
 
+    # ToolRuntime[UserContext]在这只是指定一下类型
     user_id = runtime.context.user_id # 从上下文环境中获取user_id
 
     # 模拟用户位置数据库

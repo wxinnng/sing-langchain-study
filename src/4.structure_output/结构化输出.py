@@ -101,4 +101,5 @@ def user_pydantic():
     print(structured_response.director) #导演 输出：詹姆斯·卡梅隆
     print(structured_response.rating) #评分 输出：9
 
-user_pydantic()
+# user_pydantic()
+
