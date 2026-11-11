@@ -103,3 +103,100 @@ def user_pydantic():
 
 # user_pydantic()
 
+# 通过dataclasses轻量级来实现
+@dataclass
+class SimpleContact():
+
+    name : str
+    phone : str
+    email: Optional[str] = None
+
+
+def test_dataclasses_output():
+
+    agent = create_agent(
+        model=model,
+        system_prompt="你是一个智能助手，请根据用户的问题进行回答！",
+        response_format=SimpleContact
+    )
+
+    response = agent.invoke(
+        {
+            'messages' : [HumanMessage("张三，手机号：1902902922，邮箱：29029032@qq.com")]
+        }
+    )
+
+    structured_response = response['structured_response']
+
+    print(structured_response.name)
+    print(structured_response.phone)
+    print(structured_response.email)
+
+
+# test_dataclasses_output()
+
+from typing import TypedDict
+
+
+class SimpleContact(TypedDict):
+
+    name: str
+    phone: str
+    email: str
+
+def test_dict_format():
+
+    agent = create_agent(
+        model=model,
+        system_prompt="你是一个智能助手，根据用户的问题进行回答",
+        response_format=SimpleContact
+    )
+
+    # 模型调用
+    response = agent.invoke(
+        {
+            'messages': [HumanMessage("张三，手机号：1902902922，邮箱：29029032@qq.com")]
+        },
+        
+    )['structured_response']
+
+    print(response)
+
+
+# test_dict_format()
+
+
+# JSON的格式
+# 标准JSON Schema定义
+simple_contact_schema = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string", "description": "用户姓名"},
+        "phone": {"type": "string", "description": "用户手机号码"},
+        "email": {"type": "string", "description": "用户邮箱地址"}
+    },
+    "required": ["name",  "phone"],
+    "additionalProperties": False
+} 
+
+def json_format():
+
+    agent = create_agent(
+        model=model,
+        system_prompt="你是一个智能助手，给用户回答问题",
+        response_format=simple_contact_schema
+    )
+
+
+    response = agent.invoke(
+        {
+            'messages' : [
+                HumanMessage("张三，手机号：1902902922，邮箱：29029032@qq.com")
+            ]
+        }
+    )
+
+    print(response['structured_response'])
+
+
+json_format()
