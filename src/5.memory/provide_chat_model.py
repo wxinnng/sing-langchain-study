@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from langchain.chat_models import init_chat_model,BaseChatModel
-from langchain_core.messages import HumanMessage
+
 
 # 加载 .env
 load_dotenv()
@@ -12,6 +12,7 @@ load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 base_url = os.getenv("OPENAI_BASE_URL")
 model_name = os.getenv("OPENAI_MODEL")
+
 
 def get_chat_model_with_default_setting() -> BaseChatModel:
     # 初始化模型
